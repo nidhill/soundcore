@@ -164,63 +164,75 @@ export function DonationInterface() {
 
   const handlePay = async () => {
     setError('')
-    if (finalAmount < 1)                        { setError('Enter a valid amount.'); return }
-    if (!name.trim())                           { setError('Please enter your name.'); return }
-    if (!email.trim())                          { setError('Please enter your email.'); return }
-    if (!/^\d{10}$/.test(phone.trim()))         { setError('Enter a valid 10-digit mobile number.'); return }
+    if (finalAmount < 1)                   { setError('Enter a valid amount.'); return }
+    if (!name.trim())                      { setError('Please enter your name.'); return }
+    if (!email.trim())                     { setError('Please enter your email.'); return }
+    if (!/^\d{10}$/.test(phone.trim()))    { setError('Enter a valid 10-digit mobile number.'); return }
 
     setLoading(true)
+    let orderId = ''
+
     try {
-      const res  = await fetch(`${API_URL}/api/donate`, {
+      /* 1 — Create order */
+      const orderRes  = await fetch(`${API_URL}/api/donate`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({ amount: finalAmount, name, email, phone }),
       })
-      const data = await res.json() as { payment_session_id?: string; order_id?: string; error?: string }
-      if (!res.ok || !data.payment_session_id) {
-        setError(data.error || 'Could not initiate payment.')
+      const orderData = await orderRes.json() as { payment_session_id?: string; order_id?: string; error?: string }
+      if (!orderRes.ok || !orderData.payment_session_id) {
+        setError(orderData.error || 'Could not initiate payment. Please try again.')
         return
       }
+      orderId = orderData.order_id!
 
-      const orderId  = data.order_id!
+      /* 2 — Open Cashfree modal */
       const cashfree = await load({ mode: 'production' })
-
-      // Ignore client-side result — UPI/Net Banking return { redirect: true }
-      // before the payment is actually completed. Server is the source of truth.
       await cashfree.checkout({
-        paymentSessionId: data.payment_session_id,
+        paymentSessionId: orderData.payment_session_id,
         redirectTarget:   '_modal',
       })
-
+      // Modal closed (paid, cancelled, or redirected) — verify server-side
       setLoading(false)
       setVerifying(true)
 
-      // Wait 2s for Cashfree to process the payment on their end
-      await new Promise(r => setTimeout(r, 2000))
+      /* 3 — Verify with backend (retry 3× with 2s gap for slow UPI) */
+      let success = false
+      let errMsg  = 'Payment incomplete or verification failed. No funds were deducted.'
 
-      // Retry up to 3 times with 2s gap (handles slow UPI processing)
-      let verifyData: { success?: boolean; error?: string } = {}
-      for (let attempt = 1; attempt <= 3; attempt++) {
-        const verifyRes = await fetch(`${API_URL}/api/verify-payment`, {
-          method:  'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body:    JSON.stringify({ order_id: orderId, name, email, amount: finalAmount, note: note.trim() || null }),
-        })
-        verifyData = await verifyRes.json() as { success?: boolean; error?: string }
-        if (verifyData.success) break
-        if (attempt < 3) await new Promise(r => setTimeout(r, 2000))
+      for (let i = 0; i < 3; i++) {
+        if (i > 0) await new Promise(r => setTimeout(r, 2000))
+        try {
+          const vRes  = await fetch(`${API_URL}/api/verify-payment`, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({
+              order_id: orderId,
+              name,
+              email,
+              amount:   finalAmount,
+              note:     note.trim() || null,
+            }),
+          })
+          const vData = await vRes.json() as { success?: boolean; error?: string }
+          if (vData.success) { success = true; break }
+          if (vData.error)   errMsg = vData.error
+        } catch { /* network hiccup — try again */ }
       }
 
-      if (!verifyData.success) {
-        setError(verifyData.error || 'Payment incomplete or verification failed. No funds were deducted.')
+      if (!success) {
+        setError(errMsg)
         return
       }
 
+      /* 4 — Show success */
       setSuccessData({ name: name.trim(), email: email.trim(), amount: finalAmount })
       setShowSuccess(true)
       fetchSupporters()
-    } catch {
-      setError('Network error. Please try again.')
+
+    } catch (err) {
+      console.error('[handlePay]', err)
+      setError('Something went wrong. If you completed payment, please check your email for a receipt.')
     } finally {
       setLoading(false)
       setVerifying(false)
