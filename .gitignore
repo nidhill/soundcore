@@ -40,8 +40,14 @@ Thumbs.db
 skills/
 skills-lock.json
 
-# Loose images in project root
+# Loose images in project root (but allow public/ assets)
 *.jpg
 *.JPG
 *.jpeg
 *.JPEG
+!frontend/public/*.jpg
+!frontend/public/*.JPG
+!frontend/public/*.jpeg
+!frontend/public/*.JPEG
+!frontend/public/*.png
+!frontend/public/*.PNG

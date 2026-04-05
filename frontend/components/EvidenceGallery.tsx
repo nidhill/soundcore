@@ -30,19 +30,14 @@ function HeadphoneCracked() {
 
 function SpeakerBoom2() {
   return (
-    <svg viewBox="0 0 200 165" fill="none" className="w-full h-full">
-      <rect x="45" y="24" width="110" height="118" rx="20" fill="#101018" stroke="#252530" strokeWidth="1.5" />
-      <circle cx="100" cy="75" r="34" fill="#0A0A10" stroke="#1C1C28" strokeWidth="1.5" />
-      <circle cx="100" cy="75" r="20" fill="#141420" stroke="#10B981" strokeWidth="1.2" strokeOpacity="0.4" />
-      <circle cx="100" cy="75" r="7"  fill="#10B981" fillOpacity="0.5" />
-      <circle cx="100" cy="75" r="3"  fill="#10B981" />
-      <circle cx="100" cy="75" r="44" stroke="#10B981" strokeWidth="0.7" fill="none" strokeOpacity="0.15" />
-      <circle cx="100" cy="75" r="55" stroke="#10B981" strokeWidth="0.4" fill="none" strokeOpacity="0.08" />
-      <path d="M 140 52 Q 158 75 140 98" stroke="#10B981" strokeWidth="1.8" fill="none" strokeOpacity="0.45" strokeLinecap="round" />
-      <path d="M 149 42 Q 172 75 149 108" stroke="#10B981" strokeWidth="1.2" fill="none" strokeOpacity="0.25" strokeLinecap="round" />
-      {/* Handle knob bottom */}
-      <rect x="80" y="128" width="40" height="10" rx="5" fill="#141420" stroke="#252530" strokeWidth="1" />
-    </svg>
+    <div className="w-full h-full flex items-center justify-center p-4">
+      <img
+        src="/boom2.jpg"
+        alt="Soundcore Boom 2 portable speaker — loyal product with no defects"
+        className="w-full h-full object-contain rounded-xl"
+        style={{ filter: 'drop-shadow(0 0 20px rgba(16,185,129,0.2))' }}
+      />
+    </div>
   )
 }
 
