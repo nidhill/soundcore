@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { CheckCircle2, XCircle, Loader2, Zap } from 'lucide-react'
+import { CheckCircle2, XCircle, Loader2, Zap, Mail } from 'lucide-react'
 import Link from 'next/link'
 import { API_URL } from '@/lib/api'
 
@@ -14,10 +14,15 @@ function PaymentResult() {
   useEffect(() => {
     if (!orderId) { setStatus('failed'); return }
 
-    fetch(`${API_URL}/api/donate/verify?order_id=${orderId}`)
+    // Use the strict verify-payment endpoint (verifies + updates DB + sends email)
+    fetch(`${API_URL}/api/verify-payment`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ order_id: orderId }),
+    })
       .then(r => r.json())
-      .then(data => {
-        if (data.order_status === 'PAID') setStatus('success')
+      .then((data: { success?: boolean }) => {
+        if (data.success) setStatus('success')
         else setStatus('failed')
       })
       .catch(() => setStatus('failed'))
@@ -36,16 +41,21 @@ function PaymentResult() {
         <div className="space-y-4">
           <Loader2 className="w-12 h-12 text-protest-muted mx-auto animate-spin" />
           <p className="font-mono text-protest-muted text-sm">Verifying payment...</p>
+          <p className="font-mono text-protest-muted/40 text-xs">Confirming with Cashfree — please wait</p>
         </div>
       )}
 
       {status === 'success' && (
         <div className="space-y-5">
-          <CheckCircle2 className="w-16 h-16 text-green-400 mx-auto" />
+          <CheckCircle2 className="w-16 h-16 text-emerald-400 mx-auto" />
           <h1 className="font-display text-5xl text-protest-text">THANK YOU</h1>
           <p className="font-sans text-protest-dim text-base leading-relaxed">
-            Your contribution has been received. Together, we hold them accountable.
+            Your contribution has been verified and recorded. Together, we hold them accountable.
           </p>
+          <div className="flex items-center justify-center gap-2 bg-protest-bg-el border border-protest-border rounded-xl px-4 py-3">
+            <Mail className="w-4 h-4 text-protest-gold" />
+            <p className="font-mono text-xs text-protest-muted">Receipt sent to your email</p>
+          </div>
           <p className="font-mono text-xs text-protest-muted">Order: {orderId}</p>
           <Link
             href="/"
@@ -61,7 +71,7 @@ function PaymentResult() {
           <XCircle className="w-16 h-16 text-protest-red mx-auto" />
           <h1 className="font-display text-5xl text-protest-text">PAYMENT FAILED</h1>
           <p className="font-sans text-protest-dim text-base leading-relaxed">
-            Something went wrong or the payment was cancelled. No amount was charged.
+            Payment incomplete or verification failed. No funds were deducted.
           </p>
           <Link
             href="/#donate"

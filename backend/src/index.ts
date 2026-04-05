@@ -1,9 +1,10 @@
 import 'dotenv/config'
 import express    from 'express'
 import cors       from 'cors'
-import campaignRouter from './routes/campaign'
-import reviewsRouter  from './routes/reviews'
-import donateRouter   from './routes/donate'
+import campaignRouter       from './routes/campaign'
+import reviewsRouter        from './routes/reviews'
+import donateRouter         from './routes/donate'
+import verifyPaymentRouter  from './routes/verifyPayment'
 
 const app  = express()
 const PORT = process.env.PORT || 4000
@@ -31,9 +32,10 @@ app.use(cors({
 app.use(express.json({ limit: '4mb' })) // allow base64 images up to ~3MB
 
 /* ── Routes ─────────────────────────────────────────────────────────────── */
-app.use('/api/campaign', campaignRouter)
-app.use('/api/reviews',  reviewsRouter)
-app.use('/api/donate',   donateRouter)
+app.use('/api/campaign',        campaignRouter)
+app.use('/api/reviews',         reviewsRouter)
+app.use('/api/donate',          donateRouter)
+app.use('/api/verify-payment',  verifyPaymentRouter)
 
 /* ── Health check ───────────────────────────────────────────────────────── */
 app.get('/health', (_req, res) => res.json({ status: 'ok' }))
