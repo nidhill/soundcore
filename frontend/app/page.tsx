@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Navbar }               from '@/components/Navbar'
 import { HeroSection }          from '@/components/HeroSection'
+import { AboutSection }         from '@/components/AboutSection'
 import { EmailThread }          from '@/components/EmailThread'
 import { StorySection }         from '@/components/StorySection'
 import { JusticeTracker }       from '@/components/JusticeTracker'
@@ -34,6 +35,7 @@ export default function HomePage() {
 
         <Navbar />
         <HeroSection />
+        <AboutSection />
         <EmailThread />
         <StorySection />
         <JusticeTracker onGoalReached={handleGoalReached} />

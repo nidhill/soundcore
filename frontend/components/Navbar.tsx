@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Zap } from 'lucide-react'
 
 const links = [
+  { href: '#about', label: 'About' },
   { href: '#emails', label: 'Emails' },
   { href: '#tracker', label: 'Justice' },
   { href: '#calculator', label: 'Calculator' },

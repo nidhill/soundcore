@@ -1,6 +1,7 @@
 import { Zap, ExternalLink } from 'lucide-react'
 
 const quickLinks = [
+  { href: '#about', label: 'About the Protest' },
   { href: '#emails', label: 'Email Audit' },
   { href: '#story', label: 'The Story' },
   { href: '#tracker', label: 'Justice Tracker' },
