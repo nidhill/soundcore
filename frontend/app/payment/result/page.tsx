@@ -33,7 +33,7 @@ function PaymentResult() {
       <div className="flex items-center justify-center gap-2 mb-8">
         <Zap className="w-5 h-5 text-protest-red" />
         <span className="font-display text-xl text-protest-text tracking-wider">
-          Q30 <span className="text-protest-red">PROTEST</span>
+          LIFE Q30 <span className="text-protest-red">PROTEST</span>
         </span>
       </div>
 

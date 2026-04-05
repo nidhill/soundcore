@@ -37,7 +37,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <Zap className="w-4 h-4 text-protest-red" />
           <span className="font-display text-xl text-protest-text tracking-wider">
-            Q30 <span className="text-protest-red">PROTEST</span>
+            LIFE Q30 <span className="text-protest-red">PROTEST</span>
           </span>
         </div>
 

@@ -19,7 +19,7 @@ export function Footer() {
             <div className="flex items-center gap-2 mb-4">
               <Zap className="w-5 h-5 text-protest-red" />
               <span className="font-display text-xl text-protest-text tracking-wider">
-                Q30 <span className="text-protest-red">PROTEST</span>
+                LIFE Q30 <span className="text-protest-red">PROTEST</span>
               </span>
             </div>
             <p className="font-mono text-xs text-protest-muted leading-relaxed">
