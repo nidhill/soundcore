@@ -26,9 +26,11 @@ const spaceMono = Space_Mono({
    OG image: drop a 1200×630 image at /public/og-image.png before deploying.
    Twitter / X card preview uses the same image.
 ───────────────────────────────────────────────────────────────────────── */
-const OG_IMAGE_URL = '/og-image.png'   // ← replace with absolute URL on Vercel
+const SITE_URL    = 'https://soundcore-self.vercel.app'
+const OG_IMAGE_URL = `${SITE_URL}/og-image.png`
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'The 10% Masterpiece | A Soundcore Protest',
   description:
     'When customer service fails, developers build. See how a global brand rewards loyalty with a 10% discount on a defective design.',
