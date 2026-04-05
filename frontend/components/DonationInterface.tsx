@@ -16,19 +16,6 @@ const PRESETS = [
   { label: 'Custom', value: 0   },
 ]
 
-/* ── Mock supporter feed ────────────────────────────────────────────────── */
-const SUPPORTERS = [
-  { name: 'Priya S.',      amount: 500,  msg: 'No invoice = no warranty? Absurd!'            },
-  { name: 'Dev_Raj',       amount: 200,  msg: 'Anker should be ashamed.'                      },
-  { name: 'Anonymous',     amount: 100,  msg: 'Fight the 15%! ✊'                              },
-  { name: 'TechFreak_09',  amount: 1065, msg: '15% is still an insult. Take ₹1,065 from me instead.' },
-  { name: 'Aisha M.',      amount: 350,  msg: 'Quality should stand on its own.'              },
-  { name: 'Arjun V.',      amount: 1000, msg: 'Justice for all consumers!'                    },
-  { name: 'Kamal H.',      amount: 250,  msg: "Headbands shouldn't crack in normal use."      },
-  { name: 'Sarah T.',      amount: 150,  msg: 'Standing with you. Stay strong.'               },
-  { name: 'CodeMonkey42',  amount: 300,  msg: 'A developer who gets it. Respect.'             },
-  { name: 'AngryConsumer', amount: 420,  msg: 'Had the same problem with my Q30!'             },
-]
 
 export function DonationInterface() {
   /* ── Form state ───────────────────────────────────────────── */
@@ -40,21 +27,6 @@ export function DonationInterface() {
   const [phone,          setPhone]          = useState('')
   const [loading,        setLoading]        = useState(false)
   const [error,          setError]          = useState('')
-
-  /* ── Live feed rotation ───────────────────────────────────── */
-  const [feedIdx, setFeedIdx] = useState(0)
-  const [visible, setVisible] = useState(SUPPORTERS.slice(0, 4))
-
-  useEffect(() => {
-    const iv = setInterval(() => {
-      setFeedIdx((prev) => {
-        const next = (prev + 1) % SUPPORTERS.length
-        setVisible([SUPPORTERS[next], ...SUPPORTERS.slice(0, 3)])
-        return next
-      })
-    }, 4000)
-    return () => clearInterval(iv)
-  }, [])
 
   const finalAmount = isCustom ? (parseFloat(customAmount) || 0) : selectedPreset
 
@@ -113,11 +85,10 @@ export function DonationInterface() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* ── Left: Cashfree payment form ───────────────────── */}
+        <div className="max-w-xl mx-auto w-full">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="bg-protest-bg-el border border-protest-border rounded-2xl p-6 sm:p-8 space-y-6"
           >
@@ -268,61 +239,6 @@ export function DonationInterface() {
             </div>
           </motion.div>
 
-          {/* ── Right: Live supporter feed ─────────────────────── */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="bg-protest-bg-el border border-protest-border rounded-2xl p-6 h-full flex flex-col">
-              <div className="flex items-center gap-2 mb-6">
-                <motion.div
-                  className="w-2 h-2 rounded-full bg-protest-red"
-                  animate={{ opacity: [1, 0.3, 1] }}
-                  transition={{ duration: 1.2, repeat: Infinity }}
-                />
-                <span className="font-mono text-xs text-protest-muted uppercase tracking-wider">
-                  Live Feed of Supporters
-                </span>
-              </div>
-
-              <div className="space-y-3 flex-1 overflow-hidden">
-                <AnimatePresence mode="popLayout">
-                  {visible.map((s, i) => (
-                    <motion.div
-                      key={`${s.name}-${i}`}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20, height: 0, marginBottom: 0 }}
-                      transition={{ duration: 0.3, delay: i * 0.04 }}
-                      className="flex items-start gap-3 bg-protest-bg/50 border border-protest-border/50 rounded-xl p-3.5"
-                    >
-                      <div className="w-8 h-8 rounded-full bg-protest-red-dark border border-protest-red/30 flex items-center justify-center flex-shrink-0">
-                        <span className="font-display text-xs text-protest-red">
-                          {s.name.charAt(0)}
-                        </span>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-0.5">
-                          <span className="font-mono text-xs text-protest-text font-bold">{s.name}</span>
-                          <span className="font-display text-sm text-protest-gold flex-shrink-0 ml-2">
-                            ₹{s.amount}
-                          </span>
-                        </div>
-                        <p className="font-mono text-[10px] text-protest-muted leading-snug">{s.msg}</p>
-                      </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
-              </div>
-
-              <p className="font-mono text-[10px] text-protest-muted/60 mt-5 text-center leading-relaxed">
-                // Feed uses mock data for illustration.
-                <br />
-                // Real transactions processed via Cashfree.
-              </p>
-            </div>
-          </motion.div>
         </div>
       </div>
     </section>
