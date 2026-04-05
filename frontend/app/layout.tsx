@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Bebas_Neue, Syne, Space_Mono } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 
 const bebasNeue = Bebas_Neue({
@@ -78,6 +79,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${bebasNeue.variable} ${syne.variable} ${spaceMono.variable}`}
     >
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-26MSKKWDD9"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-26MSKKWDD9');
+          `}
+        </Script>
+      </head>
       <body className="bg-protest-bg text-protest-text font-mono overflow-x-hidden antialiased">
         {children}
       </body>
