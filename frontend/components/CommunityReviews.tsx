@@ -324,11 +324,6 @@ export function CommunityReviews() {
               </div>
             )}
 
-            {reviews.length > 0 && (
-              <p className="font-mono text-[10px] text-protest-muted/40 text-center mt-4">
-                {reviews.length} report{reviews.length !== 1 ? 's' : ''} submitted · Stored in MongoDB Atlas
-              </p>
-            )}
           </motion.div>
         </div>
       </div>
