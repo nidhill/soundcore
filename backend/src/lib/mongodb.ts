@@ -3,23 +3,22 @@ import { MongoClient } from 'mongodb'
 const uri = process.env.MONGODB_URI!
 if (!uri) throw new Error('MONGODB_URI is not defined.')
 
-let client: MongoClient
+declare global {
+  // eslint-disable-next-line no-var
+  var _mongoClientPromise: Promise<MongoClient> | undefined
+}
+
 let clientPromise: Promise<MongoClient>
 
 if (process.env.NODE_ENV === 'development') {
-  // Reuse connection across nodemon restarts
-  const g = global as typeof global & { _mongoClientPromise?: Promise<MongoClient> }
-  if (!g._mongoClientPromise) {
-    client = new MongoClient(uri)
-    g._mongoClientPromise = client.connect()
+  if (!global._mongoClientPromise) {
+    global._mongoClientPromise = new MongoClient(uri).connect()
   }
-  clientPromise = g._mongoClientPromise
+  clientPromise = global._mongoClientPromise
 } else {
-  client = new MongoClient(uri)
-  clientPromise = client.connect()
+  clientPromise = new MongoClient(uri).connect()
 }
 
 export default clientPromise
-
-export const DB_NAME            = 'soundcore'
+export const DB_NAME = 'soundcore'
 export const CAMPAIGN_COLLECTION = 'campaign'

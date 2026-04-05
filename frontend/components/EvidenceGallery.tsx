@@ -3,23 +3,20 @@
 import { motion } from 'framer-motion'
 import { Camera, AlertTriangle, Heart, Mail } from 'lucide-react'
 
-/* ── Real crack photo (q30-crack.png) with red glow ──────────────────── */
 function HeadphoneCracked() {
   return (
     <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-lg">
-      {/* Real close-up crack photo — save to public/q30-crack.png */}
       <img
         src="/q30-crack.png"
         alt="Soundcore Life Q30 — cracked headband, close-up"
         className="w-full h-full object-cover"
         style={{ filter: 'drop-shadow(0 0 20px rgba(255,31,31,0.4)) brightness(0.92) contrast(1.1)' }}
         onError={(e) => {
-          // Fallback to marketing shot if crack photo not yet saved
-          ;(e.currentTarget as HTMLImageElement).src = '/q30.png'
-          ;(e.currentTarget as HTMLImageElement).style.objectFit = 'contain'
+          const img = e.currentTarget as HTMLImageElement
+          img.src = '/q30.png'
+          img.style.objectFit = 'contain'
         }}
       />
-      {/* Red vignette overlay to add drama */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at 40% 70%, rgba(255,31,31,0.18) 0%, transparent 65%)' }}
@@ -46,28 +43,22 @@ function EmailOffer() {
     <svg viewBox="0 0 200 165" fill="none" className="w-full h-full">
       <rect x="22" y="35" width="156" height="105" rx="12" fill="#101018" stroke="#252530" strokeWidth="1.5" />
       <path d="M 22 52 L 100 90 L 178 52" stroke="#F5C518" strokeWidth="1.5" fill="none" strokeOpacity="0.6" strokeLinejoin="round" />
-      {/* "Email content" lines */}
-      <rect x="42" y="100" width="70" height="6"  rx="3" fill="#1C1C28" />
-      <rect x="42" y="112" width="50" height="6"  rx="3" fill="#1C1C28" />
-      {/* Big 10% text */}
+      <rect x="42" y="100" width="70" height="6" rx="3" fill="#1C1C28" />
+      <rect x="42" y="112" width="50" height="6" rx="3" fill="#1C1C28" />
       <text x="52" y="88" fill="#F5C518" fontFamily="monospace" fontSize="22" fontWeight="bold" fillOpacity="0.85">10%</text>
-      {/* Gold seal stamp */}
       <circle cx="158" cy="43" r="20" fill="#3A2800" stroke="#F5C518" strokeWidth="1.5" />
       <text x="149" y="48" fill="#F5C518" fontFamily="monospace" fontSize="16">✓</text>
-      {/* Sarcastic text */}
-      <text x="34"  y="130" fill="#70707A" fontFamily="monospace" fontSize="7">OFFER ENCLOSED</text>
+      <text x="34" y="130" fill="#70707A" fontFamily="monospace" fontSize="7">OFFER ENCLOSED</text>
     </svg>
   )
 }
 
-/* ── Gallery data ──────────────────────────────────────────────────────── */
 const exhibits = [
   {
     id: 'A',
     title: 'THE FRACTURED CROWN',
     subtitle: 'Soundcore Life Q30',
-    caption:
-      'Normal wear. No drops. No misuse. Just a headband that decided structural integrity was optional.',
+    caption: 'Normal wear. No drops. No misuse. Just a headband that decided structural integrity was optional.',
     tag: 'DEFECTIVE',
     tagBg: 'bg-protest-red',
     tagText: 'text-white',
@@ -81,8 +72,7 @@ const exhibits = [
     id: 'B',
     title: 'THE LOYAL COMPANION',
     subtitle: 'Soundcore Boom 2',
-    caption:
-      'Years of thumping, travel, and daily use. Not a single crack. Funny how some products actually work.',
+    caption: 'Years of thumping, travel, and daily use. Not a single crack. Funny how some products actually work.',
     tag: 'LOYAL',
     tagBg: 'bg-emerald-900',
     tagText: 'text-emerald-300',
@@ -96,8 +86,7 @@ const exhibits = [
     id: 'C',
     title: 'THE GENEROUS OFFER',
     subtitle: 'Customer Support Email',
-    caption:
-      '"Without an invoice we can only offer 10% off your next purchase." — A sentence that should embarrass someone.',
+    caption: '"Without an invoice we can only offer 10% off your next purchase." — A sentence that should embarrass someone.',
     tag: '10% INSULT',
     tagBg: 'bg-protest-gold-dark',
     tagText: 'text-protest-gold',
@@ -109,12 +98,10 @@ const exhibits = [
   },
 ]
 
-/* ── Component ─────────────────────────────────────────────────────────── */
 export function EvidenceGallery() {
   return (
     <section id="evidence" className="py-28 px-4 bg-protest-bg-card relative">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -133,7 +120,6 @@ export function EvidenceGallery() {
           </p>
         </motion.div>
 
-        {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {exhibits.map((ex, i) => (
             <motion.div
@@ -145,25 +131,18 @@ export function EvidenceGallery() {
               whileHover={{ y: -8, transition: { duration: 0.2 } }}
               className="group border border-protest-border bg-protest-bg-el rounded-2xl overflow-hidden cursor-default select-none"
             >
-              {/* Image area */}
-              <div
-                className={`relative h-56 bg-gradient-to-b ${ex.gradFrom} ${ex.gradTo} flex items-center justify-center p-6`}
-              >
+              <div className={`relative h-56 bg-gradient-to-b ${ex.gradFrom} ${ex.gradTo} flex items-center justify-center p-6`}>
                 <div className="absolute top-3 left-3 font-mono text-[10px] text-protest-muted bg-protest-bg px-2 py-1 rounded">
                   EXHIBIT {ex.id}
                 </div>
-                <div
-                  className={`absolute top-3 right-3 ${ex.tagBg} ${ex.tagText} text-[10px] font-mono px-2.5 py-1 rounded-full uppercase tracking-wider`}
-                >
+                <div className={`absolute top-3 right-3 ${ex.tagBg} ${ex.tagText} text-[10px] font-mono px-2.5 py-1 rounded-full uppercase tracking-wider`}>
                   {ex.tag}
                 </div>
-
                 <div className="w-40 h-36">
                   <ex.Render />
                 </div>
               </div>
 
-              {/* Caption */}
               <div className="p-5">
                 <div className="flex items-center gap-2 mb-1">
                   <ex.icon className="w-4 h-4 flex-shrink-0" style={{ color: ex.iconColor }} />

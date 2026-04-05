@@ -3,6 +3,15 @@
 import { motion } from 'framer-motion'
 import { CheckCircle2, Zap } from 'lucide-react'
 
+const DOTS = Array.from({ length: 30 }, (_, i) => ({
+  left: `${4 + ((i * 3.3) % 92)}%`,
+  top: `${4 + ((i * 7.1) % 92)}%`,
+  size: 2 + (i % 4),
+  color: i % 2 === 0 ? '#F5C518' : '#FF1F1F',
+  duration: 3 + (i % 3),
+  delay: i * 0.1,
+}))
+
 export function JusticeServedOverlay({ amount }: { amount: number }) {
   return (
     <motion.div
@@ -12,35 +21,18 @@ export function JusticeServedOverlay({ amount }: { amount: number }) {
       className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden"
       style={{ background: 'rgba(6,6,8,0.96)', backdropFilter: 'blur(8px)' }}
     >
-      {/* Gold radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse at center, rgba(245,197,24,0.18) 0%, transparent 65%)',
-        }}
+        style={{ background: 'radial-gradient(ellipse at center, rgba(245,197,24,0.18) 0%, transparent 65%)' }}
       />
 
-      {/* Particle field */}
-      {Array.from({ length: 30 }).map((_, i) => (
+      {DOTS.map((d, i) => (
         <motion.div
           key={i}
           className="absolute rounded-full pointer-events-none"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            width: 2 + (i % 4),
-            height: 2 + (i % 4),
-            backgroundColor: i % 2 === 0 ? '#F5C518' : '#FF1F1F',
-            opacity: 0.4,
-          }}
-          animate={{ y: [-20, 20, -20], opacity: [0.2, 0.8, 0.2] }}
-          transition={{
-            duration: 3 + (i % 3),
-            repeat: Infinity,
-            delay: i * 0.1,
-            ease: 'easeInOut',
-          }}
+          style={{ left: d.left, top: d.top, width: d.size, height: d.size, backgroundColor: d.color, opacity: 0.4 }}
+          animate={{ y: [-14, 14, -14], opacity: [0.2, 0.8, 0.2] }}
+          transition={{ duration: d.duration, repeat: Infinity, delay: d.delay, ease: 'easeInOut' }}
         />
       ))}
 
@@ -54,11 +46,7 @@ export function JusticeServedOverlay({ amount }: { amount: number }) {
           <CheckCircle2 className="w-24 h-24 text-protest-gold mx-auto" />
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-        >
+        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
           <div className="inline-flex items-center gap-2 text-xs font-mono text-protest-gold border border-protest-gold/30 bg-protest-gold/10 px-4 py-2 rounded-full mb-6 uppercase tracking-widest">
             <Zap className="w-3 h-3" />
             Case Closed

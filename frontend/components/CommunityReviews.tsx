@@ -13,16 +13,14 @@ interface Review {
   created_at: string
 }
 
-/* ── Relative time helper ─────────────────────────────────────────────── */
 function timeAgo(dateStr: string) {
   const s = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000)
-  if (s < 60)   return 'just now'
-  if (s < 3600)  return `${Math.floor(s / 60)}m ago`
+  if (s < 60) return 'just now'
+  if (s < 3600) return `${Math.floor(s / 60)}m ago`
   if (s < 86400) return `${Math.floor(s / 3600)}h ago`
   return `${Math.floor(s / 86400)}d ago`
 }
 
-/* ── Single review card ───────────────────────────────────────────────── */
 function ReviewCard({ review, index }: { review: Review; index: number }) {
   const [imgError, setImgError] = useState(false)
 
@@ -33,7 +31,6 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
       transition={{ delay: index * 0.06 }}
       className="bg-protest-bg-el border border-protest-border rounded-2xl overflow-hidden hover:border-protest-red/30 transition-colors"
     >
-      {/* Image */}
       {review.image && !imgError ? (
         <div className="relative h-44 bg-protest-bg overflow-hidden">
           <img
@@ -50,28 +47,21 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
         </div>
       ) : null}
 
-      {/* Content */}
       <div className="p-5">
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex items-center gap-3">
-            {/* Avatar initial */}
             <div className="w-9 h-9 rounded-full bg-protest-red-dark border border-protest-red/30 flex items-center justify-center flex-shrink-0">
               <span className="font-display text-sm text-protest-red">
                 {review.name.charAt(0).toUpperCase()}
               </span>
             </div>
             <div>
-              <p className="font-sans text-protest-text text-sm font-semibold leading-tight">
-                {review.name}
-              </p>
-              <p className="font-mono text-[10px] text-protest-muted">
-                {timeAgo(review.created_at)}
-              </p>
+              <p className="font-sans text-protest-text text-sm font-semibold leading-tight">{review.name}</p>
+              <p className="font-mono text-[10px] text-protest-muted">{timeAgo(review.created_at)}</p>
             </div>
           </div>
           <AlertTriangle className="w-4 h-4 text-protest-red flex-shrink-0 mt-0.5" />
         </div>
-
         <p className="font-sans text-protest-dim text-sm leading-relaxed line-clamp-4">
           {review.description}
         </p>
@@ -80,15 +70,14 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
   )
 }
 
-/* ── Submit form ──────────────────────────────────────────────────────── */
 function SubmitForm({ onSubmitted }: { onSubmitted: () => void }) {
-  const [name,        setName]        = useState('')
+  const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const [imageB64,    setImageB64]    = useState<string | null>(null)
-  const [preview,     setPreview]     = useState<string | null>(null)
-  const [submitting,  setSubmitting]  = useState(false)
-  const [success,     setSuccess]     = useState(false)
-  const [error,       setError]       = useState('')
+  const [imageB64, setImageB64] = useState<string | null>(null)
+  const [preview, setPreview] = useState<string | null>(null)
+  const [submitting, setSubmitting] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState('')
   const fileRef = useRef<HTMLInputElement>(null)
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,7 +94,11 @@ function SubmitForm({ onSubmitted }: { onSubmitted: () => void }) {
     reader.readAsDataURL(file)
   }
 
-  const removeImage = () => { setImageB64(null); setPreview(null); if (fileRef.current) fileRef.current.value = '' }
+  const removeImage = () => {
+    setImageB64(null)
+    setPreview(null)
+    if (fileRef.current) fileRef.current.value = ''
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -121,7 +114,9 @@ function SubmitForm({ onSubmitted }: { onSubmitted: () => void }) {
       const data = await res.json()
       if (!res.ok) { setError(data.error || 'Submission failed.'); return }
       setSuccess(true)
-      setName(''); setDescription(''); removeImage()
+      setName('')
+      setDescription('')
+      removeImage()
       setTimeout(() => { setSuccess(false); onSubmitted() }, 3000)
     } catch {
       setError('Network error. Please try again.')
@@ -139,7 +134,6 @@ function SubmitForm({ onSubmitted }: { onSubmitted: () => void }) {
         Had a similar experience with Soundcore? Let the world know.
       </p>
 
-      {/* Name */}
       <div>
         <label className="font-mono text-[10px] text-protest-muted uppercase tracking-wider mb-1.5 block">
           Your Name
@@ -154,7 +148,6 @@ function SubmitForm({ onSubmitted }: { onSubmitted: () => void }) {
         />
       </div>
 
-      {/* Description */}
       <div>
         <label className="font-mono text-[10px] text-protest-muted uppercase tracking-wider mb-1.5 block">
           Your Experience
@@ -172,7 +165,6 @@ function SubmitForm({ onSubmitted }: { onSubmitted: () => void }) {
         </div>
       </div>
 
-      {/* Image upload */}
       <div>
         <label className="font-mono text-[10px] text-protest-muted uppercase tracking-wider mb-1.5 block">
           Photo of the Issue <span className="text-protest-muted/50 normal-case">(optional · max 2 MB)</span>
@@ -199,23 +191,15 @@ function SubmitForm({ onSubmitted }: { onSubmitted: () => void }) {
             <span className="font-mono text-xs text-protest-muted">Click to upload image</span>
           </button>
         )}
-        <input
-          ref={fileRef}
-          type="file"
-          accept="image/*"
-          onChange={handleFile}
-          className="hidden"
-        />
+        <input ref={fileRef} type="file" accept="image/*" onChange={handleFile} className="hidden" />
       </div>
 
-      {/* Error */}
       {error && (
         <p className="font-mono text-xs text-protest-red bg-protest-red/5 border border-protest-red/20 rounded-lg px-4 py-2">
           {error}
         </p>
       )}
 
-      {/* Submit */}
       <button
         type="submit"
         disabled={submitting || success}
@@ -237,10 +221,9 @@ function SubmitForm({ onSubmitted }: { onSubmitted: () => void }) {
   )
 }
 
-/* ── Main section ─────────────────────────────────────────────────────── */
 export function CommunityReviews() {
-  const [reviews,  setReviews]  = useState<Review[]>([])
-  const [loading,  setLoading]  = useState(true)
+  const [reviews, setReviews] = useState<Review[]>([])
+  const [loading, setLoading] = useState(true)
   const [refreshKey, setRefreshKey] = useState(0)
 
   useEffect(() => {
@@ -253,18 +236,15 @@ export function CommunityReviews() {
 
   return (
     <section id="community" className="py-28 px-4 bg-protest-bg-card relative overflow-hidden">
-      {/* Background grid */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
-          backgroundImage:
-            'repeating-linear-gradient(45deg, #FF1F1F 0, #FF1F1F 1px, transparent 0, transparent 50%)',
+          backgroundImage: 'repeating-linear-gradient(45deg, #FF1F1F 0, #FF1F1F 1px, transparent 0, transparent 50%)',
           backgroundSize: '30px 30px',
         }}
       />
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -286,7 +266,6 @@ export function CommunityReviews() {
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left: Submit form */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -296,7 +275,6 @@ export function CommunityReviews() {
             <SubmitForm onSubmitted={() => setRefreshKey(k => k + 1)} />
           </motion.div>
 
-          {/* Right: Reviews feed */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -323,7 +301,6 @@ export function CommunityReviews() {
                 </AnimatePresence>
               </div>
             )}
-
           </motion.div>
         </div>
       </div>

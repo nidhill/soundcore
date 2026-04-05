@@ -9,7 +9,7 @@ const terminal = [
   { t: '$',  line: 'warranty.verify()' },
   { t: '!',  line: 'ERROR: invoice_not_found' },
   { t: '→',  line: 'REASON: product received as gift — no PDF exists' },
-  { t: '?',  line: 'QUESTION: does a missing PDF change the headband\'s structural integrity?' },
+  { t: '?',  line: "QUESTION: does a missing PDF change the headband's structural integrity?" },
   { t: '→',  line: 'ANSWER:   no.' },
   { t: '$',  line: 'resolution.compute()' },
   { t: '→',  line: 'OFFER: 10% discount on a new purchase' },
@@ -37,11 +37,16 @@ const faqs = [
   },
 ]
 
+const promptColor: Record<string, string> = {
+  '$': 'text-green-400',
+  '!': 'text-protest-red',
+  '?': 'text-protest-gold',
+}
+
 export function InvoiceDialogue() {
   return (
     <section id="invoice" className="py-28 px-4 relative">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -53,8 +58,7 @@ export function InvoiceDialogue() {
             Case Study
           </div>
           <h2 className="font-display text-6xl md:text-8xl text-protest-text leading-none mb-4">
-            THE INVISIBLE{' '}
-            <span className="text-protest-gold">INVOICE</span>
+            THE INVISIBLE <span className="text-protest-gold">INVOICE</span>
           </h2>
           <p className="font-mono text-protest-muted text-sm max-w-lg mx-auto leading-relaxed">
             // A design defect does not disappear because a PDF is missing.
@@ -63,14 +67,12 @@ export function InvoiceDialogue() {
           </p>
         </motion.div>
 
-        {/* Terminal log */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="bg-protest-bg-el border border-protest-border rounded-2xl p-6 mb-10 font-mono text-xs overflow-x-auto"
         >
-          {/* Window chrome */}
           <div className="flex items-center gap-2 mb-5 border-b border-protest-border pb-3">
             <div className="flex gap-1.5">
               <div className="w-3 h-3 rounded-full bg-protest-red/60" />
@@ -92,28 +94,10 @@ export function InvoiceDialogue() {
                 transition={{ delay: i * 0.055 }}
                 className="flex gap-4"
               >
-                <span
-                  className={
-                    row.t === '$'
-                      ? 'text-green-400 flex-shrink-0'
-                      : row.t === '!'
-                      ? 'text-protest-red flex-shrink-0'
-                      : row.t === '?'
-                      ? 'text-protest-gold flex-shrink-0'
-                      : 'text-protest-muted flex-shrink-0'
-                  }
-                >
+                <span className={`${promptColor[row.t] ?? 'text-protest-muted'} flex-shrink-0`}>
                   {row.t}
                 </span>
-                <span
-                  className={
-                    row.t === '!'
-                      ? 'text-protest-red/80'
-                      : row.t === '$'
-                      ? 'text-protest-text'
-                      : 'text-protest-muted'
-                  }
-                >
+                <span className={row.t === '!' ? 'text-protest-red/80' : row.t === '$' ? 'text-protest-text' : 'text-protest-muted'}>
                   {row.line}
                 </span>
               </motion.div>
@@ -121,7 +105,6 @@ export function InvoiceDialogue() {
           </div>
         </motion.div>
 
-        {/* FAQ items */}
         <div className="space-y-4">
           {faqs.map((faq, i) => (
             <motion.div

@@ -2,9 +2,8 @@ import { Router } from 'express'
 
 const router = Router()
 const CF_BASE = 'https://api.cashfree.com/pg'
-const CF_VER  = '2023-08-01'
+const CF_VER = '2023-08-01'
 
-/* POST /api/donate — create a Cashfree order */
 router.post('/', async (req, res) => {
   try {
     const { amount, name, email, phone } = req.body
@@ -19,19 +18,17 @@ router.post('/', async (req, res) => {
       res.status(400).json({ error: 'Enter a valid 10-digit mobile number.' }); return
     }
 
-    const orderId   = `protest-${Date.now()}`
-    const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000')
-    // Cashfree requires HTTPS for return_url
-    const siteUrl   = frontendUrl.replace(/^http:\/\//, 'https://')
-    const returnUrl = `${siteUrl}/payment/result?order_id={order_id}`
+    const orderId = `protest-${Date.now()}`
+    const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/^http:\/\//, 'https://')
+    const returnUrl = `${frontendUrl.replace(/\/$/, '')}/payment/result?order_id={order_id}`
 
     const payload = {
-      order_id:       orderId,
-      order_amount:   Number(amount),
+      order_id: orderId,
+      order_amount: Number(amount),
       order_currency: 'INR',
       customer_details: {
-        customer_id:    `cust_${Date.now()}`,
-        customer_name:  name.trim().slice(0, 100),
+        customer_id: `cust_${Date.now()}`,
+        customer_name: name.trim().slice(0, 100),
         customer_email: email.trim(),
         customer_phone: phone.trim(),
       },
@@ -42,12 +39,12 @@ router.post('/', async (req, res) => {
     }
 
     const response = await fetch(`${CF_BASE}/orders`, {
-      method:  'POST',
+      method: 'POST',
       headers: {
-        'Content-Type':    'application/json',
-        'x-client-id':     process.env.CASHFREE_APP_ID!,
+        'Content-Type': 'application/json',
+        'x-client-id': process.env.CASHFREE_APP_ID!,
         'x-client-secret': process.env.CASHFREE_SECRET_KEY!,
-        'x-api-version':   CF_VER,
+        'x-api-version': CF_VER,
       },
       body: JSON.stringify(payload),
     })
@@ -62,7 +59,7 @@ router.post('/', async (req, res) => {
 
     res.json({
       payment_session_id: data.payment_session_id,
-      order_id:           data.order_id,
+      order_id: data.order_id,
     })
   } catch (err) {
     console.error('[donate POST]', err)
@@ -70,7 +67,6 @@ router.post('/', async (req, res) => {
   }
 })
 
-/* GET /api/donate/verify?order_id=xxx — verify payment status */
 router.get('/verify', async (req, res) => {
   const orderId = req.query.order_id as string
   if (!orderId) {
@@ -80,9 +76,9 @@ router.get('/verify', async (req, res) => {
   try {
     const response = await fetch(`${CF_BASE}/orders/${orderId}`, {
       headers: {
-        'x-client-id':     process.env.CASHFREE_APP_ID!,
+        'x-client-id': process.env.CASHFREE_APP_ID!,
         'x-client-secret': process.env.CASHFREE_SECRET_KEY!,
-        'x-api-version':   CF_VER,
+        'x-api-version': CF_VER,
       },
     })
     const data = await response.json() as { order_status?: string }

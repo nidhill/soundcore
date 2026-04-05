@@ -86,11 +86,16 @@ const steps = [
   },
 ]
 
+const terminalColor: Record<string, string> = {
+  '$': 'text-green-400',
+  '!': 'text-protest-red',
+  '?': 'text-protest-gold',
+}
+
 export function StorySection() {
   return (
     <section id="story" className="py-28 px-4 relative">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -101,17 +106,14 @@ export function StorySection() {
             Case #Q30-CRACK-0001
           </div>
           <h2 className="font-display text-6xl md:text-8xl text-protest-text leading-none mb-4">
-            HOW WE GOT{' '}
-            <span className="text-protest-red">HERE</span>
+            HOW WE GOT <span className="text-protest-red">HERE</span>
           </h2>
           <p className="font-mono text-protest-muted text-sm">
             // Six steps from loyal customer to protest website.
           </p>
         </motion.div>
 
-        {/* Timeline */}
         <div className="relative">
-          {/* Vertical line */}
           <div className="absolute left-5 md:left-7 top-0 bottom-0 w-px bg-protest-border" />
 
           <div className="space-y-8">
@@ -122,10 +124,9 @@ export function StorySection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.07 }}
-                className="relative pl-14 md:pl-18"
+                className="relative"
                 style={{ paddingLeft: '4rem' }}
               >
-                {/* Dot */}
                 <div
                   className="absolute left-2 md:left-4 top-5 w-6 h-6 rounded-full border bg-protest-bg-el flex items-center justify-center z-10"
                   style={{ borderColor: s.color + '55' }}
@@ -133,40 +134,23 @@ export function StorySection() {
                   <div className="w-2 h-2 rounded-full" style={{ backgroundColor: s.color }} />
                 </div>
 
-                <div
-                  className="bg-protest-bg-el border border-protest-border rounded-2xl p-5 hover:border-protest-border/80 transition-colors"
-                >
-                  {/* Title row */}
+                <div className="bg-protest-bg-el border border-protest-border rounded-2xl p-5 hover:border-protest-border/80 transition-colors">
                   <div className="flex items-center gap-3 mb-3">
                     <s.icon className="w-4 h-4 flex-shrink-0" style={{ color: s.color }} />
                     <span className="font-mono text-xs text-protest-muted">{s.n}</span>
-                    <h3 className="font-display text-xl" style={{ color: s.color }}>
-                      {s.title}
-                    </h3>
+                    <h3 className="font-display text-xl" style={{ color: s.color }}>{s.title}</h3>
                   </div>
 
-                  {/* Comment block */}
                   <div className="bg-protest-bg rounded-lg px-4 py-3 mb-3 font-mono text-xs">
                     {s.code.split('\n').map((l, j) => (
                       <div key={j} className="text-protest-muted">{l}</div>
                     ))}
                   </div>
 
-                  {/* Terminal block */}
                   <div className="bg-black/40 border border-protest-border/50 rounded-lg px-4 py-3 mb-3 font-mono text-xs space-y-1">
                     {s.terminal.map((row, j) => (
                       <div key={j} className="flex gap-3">
-                        <span
-                          className={
-                            row.t === '$'
-                              ? 'text-green-400'
-                              : row.t === '!'
-                              ? 'text-protest-red'
-                              : row.t === '?'
-                              ? 'text-protest-gold'
-                              : 'text-protest-muted'
-                          }
-                        >
+                        <span className={`${terminalColor[row.t] ?? 'text-protest-muted'} flex-shrink-0`}>
                           {row.t}
                         </span>
                         <span className="text-protest-dim">{row.line}</span>
