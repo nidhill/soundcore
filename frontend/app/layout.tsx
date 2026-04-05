@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Bebas_Neue, Syne, Space_Mono } from 'next/font/google'
 import Script from 'next/script'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 const bebasNeue = Bebas_Neue({
@@ -95,6 +96,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-protest-bg text-protest-text font-mono overflow-x-hidden antialiased">
         {children}
+        <Analytics />
       </body>
     </html>
   )
