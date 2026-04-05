@@ -142,11 +142,12 @@ function buildReceiptHtml(name: string, amount: number, orderId: string): string
 
 /* ── POST /api/verify-payment ───────────────────────────────────────────── */
 router.post('/', async (req, res) => {
-  const { order_id, name, email, amount } = req.body as {
+  const { order_id, name, email, amount, note } = req.body as {
     order_id: string
     name?:    string
     email?:   string
     amount?:  number
+    note?:    string
   }
 
   if (!order_id?.trim()) {
@@ -195,6 +196,7 @@ router.post('/', async (req, res) => {
       amount:       verifiedAmount,
       name:         verifiedName,
       email:        verifiedEmail,
+      note:         note?.trim().slice(0, 140) || null,
       processed_at: new Date(),
     })
 

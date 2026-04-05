@@ -5,6 +5,7 @@ import campaignRouter       from './routes/campaign'
 import reviewsRouter        from './routes/reviews'
 import donateRouter         from './routes/donate'
 import verifyPaymentRouter  from './routes/verifyPayment'
+import supportersRouter     from './routes/supporters'
 
 const app  = express()
 const PORT = process.env.PORT || 4000
@@ -36,6 +37,7 @@ app.use('/api/campaign',        campaignRouter)
 app.use('/api/reviews',         reviewsRouter)
 app.use('/api/donate',          donateRouter)
 app.use('/api/verify-payment',  verifyPaymentRouter)
+app.use('/api/supporters',      supportersRouter)
 
 /* ── Health check ───────────────────────────────────────────────────────── */
 app.get('/health', (_req, res) => res.json({ status: 'ok' }))
