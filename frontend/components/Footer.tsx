@@ -10,21 +10,12 @@ const quickLinks = [
   { href: '#donate',     label: 'Support'     },
 ]
 
-const stack = [
-  'Next.js 14 (App Router)',
-  'Tailwind CSS',
-  'Framer Motion',
-  'MongoDB Atlas',
-  'Lucide React',
-  'Bebas Neue + Space Mono',
-  'A considerable amount of frustration',
-]
 
 export function Footer() {
   return (
     <footer className="border-t border-protest-border bg-protest-bg py-16 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-4">
@@ -63,17 +54,6 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Tech stack */}
-          <div>
-            <h4 className="font-mono text-[10px] text-protest-muted uppercase tracking-[0.2em] mb-4">
-              Built With
-            </h4>
-            <div className="font-mono text-xs text-protest-muted space-y-1.5">
-              {stack.map((s) => (
-                <div key={s}>→ {s}</div>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Disclaimer */}

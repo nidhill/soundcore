@@ -223,7 +223,7 @@ export function JusticeTracker({ onGoalReached }: Props) {
             },
             {
               label: "Soundcore's Offer",
-              value: '₹710  (10%)',
+              value: '₹1,065  (15%)',
               icon: AlertTriangle,
               col: 'text-protest-muted',
             },

@@ -11,7 +11,7 @@ const PRESETS = [
   { label: '₹100',  value: 100  },
   { label: '₹250',  value: 250  },
   { label: '₹500',  value: 500  },
-  { label: '₹710',  value: 710,  note: 'Cover their 10%' },
+  { label: '₹1065', value: 1065, note: "Cover their 15%" },
   { label: '₹1000', value: 1000 },
   { label: 'Custom', value: 0   },
 ]
@@ -20,8 +20,8 @@ const PRESETS = [
 const SUPPORTERS = [
   { name: 'Priya S.',      amount: 500,  msg: 'No invoice = no warranty? Absurd!'            },
   { name: 'Dev_Raj',       amount: 200,  msg: 'Anker should be ashamed.'                      },
-  { name: 'Anonymous',     amount: 100,  msg: 'Fight the 10%! ✊'                              },
-  { name: 'TechFreak_09',  amount: 710,  msg: '10% is an insult. Take ₹710 from me instead.' },
+  { name: 'Anonymous',     amount: 100,  msg: 'Fight the 15%! ✊'                              },
+  { name: 'TechFreak_09',  amount: 1065, msg: '15% is still an insult. Take ₹1,065 from me instead.' },
   { name: 'Aisha M.',      amount: 350,  msg: 'Quality should stand on its own.'              },
   { name: 'Arjun V.',      amount: 1000, msg: 'Justice for all consumers!'                    },
   { name: 'Kamal H.',      amount: 250,  msg: "Headbands shouldn't crack in normal use."      },
@@ -32,7 +32,7 @@ const SUPPORTERS = [
 
 export function DonationInterface() {
   /* ── Form state ───────────────────────────────────────────── */
-  const [selectedPreset, setSelectedPreset] = useState(710)
+  const [selectedPreset, setSelectedPreset] = useState(1065)
   const [customAmount,   setCustomAmount]   = useState('')
   const [isCustom,       setIsCustom]       = useState(false)
   const [name,           setName]           = useState('')
