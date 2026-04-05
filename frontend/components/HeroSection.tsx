@@ -105,7 +105,7 @@ const PARTICLES = Array.from({ length: 18 }, (_, i) => ({
 
 /* ── Hero ─────────────────────────────────────────────────────────────── */
 export function HeroSection() {
-  const line1 = 'THE 10%'
+  const line1 = 'THE 15%'
   const line2 = 'MASTERPIECE'
 
   return (
@@ -160,7 +160,7 @@ export function HeroSection() {
           <div className="inline-flex items-center gap-2 bg-protest-red-dark border border-protest-red/40 px-5 py-2 rounded-full">
             <AlertTriangle className="w-3.5 h-3.5 text-protest-red" />
             <span className="font-mono text-xs text-protest-red uppercase tracking-[0.18em]">
-              ERROR: Q30_HEADBAND_CRACKED &nbsp;//&nbsp; DESIGN_DEFECT
+              ERROR: Q30_HEADBAND_CRACKED &nbsp;//&nbsp; OFFER_UPGRADED_FROM_10%_TO_15%
             </span>
           </div>
         </motion.div>
@@ -215,8 +215,9 @@ export function HeroSection() {
         >
           <p className="font-mono text-protest-muted text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             Where brand loyalty meets a{' '}
+            <span className="text-protest-muted line-through text-sm mr-1">10%</span>
             <span className="text-protest-gold font-bold border-b border-protest-gold/30">
-              10% discount
+              15% discount
             </span>{' '}
             on a broken design.
           </p>

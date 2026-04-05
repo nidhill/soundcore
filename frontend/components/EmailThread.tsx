@@ -65,6 +65,46 @@ const thread = [
     Icon: User,
     highlights: [],
   },
+  {
+    step: '04',
+    date: 'Day 9',
+    direction: 'received' as const,
+    from: 'Soundcore Support',
+    fromRole: 'Soundcore Customer Support Representative',
+    to: 'Muhammad Nidhil',
+    subject: 'Re: Structural Failure — Final Resolution',
+    body: 'Checked the serial number and the unit is outside the original warranty period. However, because we value your advocacy in the developer community, we are increasing our offer to a 15% partial refund on a new purchase.',
+    tag: 'THE 5% UPGRADE',
+    tagBg: 'bg-protest-gold-dark',
+    tagText: 'text-protest-gold',
+    tagBorder: 'border-protest-gold/30',
+    accentColor: '#F5C518',
+    avatar: 'S',
+    avatarBg: 'bg-protest-gold-dark border border-protest-gold/30',
+    avatarText: 'text-protest-gold',
+    Icon: Building2,
+    highlights: ['15% partial refund', 'outside the original warranty period'],
+  },
+  {
+    step: '05',
+    date: 'Day 9',
+    direction: 'sent' as const,
+    from: 'Muhammad Nidhil',
+    fromRole: 'Junior Software Developer & Loyal Customer',
+    to: 'Soundcore Customer Support',
+    subject: 'Re: Structural Failure — Final Resolution',
+    body: 'Declined the 15% offer. An extra 5% does not change the fact that asking a customer to pay 85% for a known manufacturing defect is unacceptable. Informed them that the protest site is now live and provided the link.',
+    tag: 'CASE CLOSED',
+    tagBg: 'bg-protest-red-dark',
+    tagText: 'text-protest-red',
+    tagBorder: 'border-protest-red/30',
+    accentColor: '#FF1F1F',
+    avatar: 'N',
+    avatarBg: 'bg-protest-red-dark border border-protest-red/30',
+    avatarText: 'text-protest-red',
+    Icon: User,
+    highlights: ['85%', '15% offer'],
+  },
 ]
 
 /* ── Highlight renderer ────────────────────────────────────────────────── */
@@ -244,6 +284,21 @@ export function EmailThread() {
                           </div>
                         </div>
                       )}
+
+                      {/* Special callout for email 4 */}
+                      {email.step === '04' && (
+                        <div className="mt-4 flex items-start gap-3 bg-protest-gold/5 border border-protest-gold/20 rounded-xl p-4">
+                          <div className="w-1 self-stretch rounded-full bg-protest-gold flex-shrink-0" />
+                          <div>
+                            <p className="font-sans text-protest-gold text-xs font-semibold mb-1 uppercase tracking-wider">
+                              The Upgrade
+                            </p>
+                            <p className="font-mono text-protest-muted text-xs leading-relaxed">
+                              10% → 15%. A 5% raise after a protest site was announced. You still pay <span className="text-protest-red font-bold">₹6,035</span> of ₹7,100 yourself.
+                            </p>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </motion.div>
@@ -275,9 +330,16 @@ export function EmailThread() {
             A documented design defect. No invoice because it was a{' '}
             <span className="text-protest-gold font-semibold">gift</span>.
             Resolution offered:{' '}
-            <span className="text-protest-red font-semibold">10% off a new purchase.</span>
+            <span className="text-protest-red font-semibold">
+              a generous 15% discount to buy the same defective product again.
+            </span>
           </p>
-          <p className="font-sans text-protest-muted text-sm">
+          <div className="flex items-center justify-center gap-3 mt-3">
+            <span className="font-mono text-protest-muted/50 text-xs line-through">10%</span>
+            <span className="font-mono text-protest-gold text-xs">→ upgraded to 15%</span>
+            <span className="font-mono text-protest-muted/50 text-xs italic">(you still pay 85%)</span>
+          </div>
+          <p className="font-sans text-protest-muted text-sm mt-3">
             This page is the counter-offer.
           </p>
         </motion.div>

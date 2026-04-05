@@ -10,8 +10,8 @@ export function Calculator() {
   const [showThankYou, setTY]       = useState(false)
 
   const num            = parseFloat(price) || 0
-  const soundcoreShare = +(num * 0.1).toFixed(2)
-  const yourPenalty    = +(num * 0.9).toFixed(2)
+  const soundcoreShare = +(num * 0.15).toFixed(2)
+  const yourPenalty    = +(num * 0.85).toFixed(2)
 
   const calc = () => { if (num > 0) setCalculated(true) }
   const thankYou = () => {
@@ -31,7 +31,7 @@ export function Calculator() {
         >
           <div className="inline-flex items-center gap-2 text-xs font-mono text-protest-red border border-protest-red/30 bg-protest-red/5 px-4 py-2 rounded-full mb-6 uppercase tracking-[0.18em]">
             <CalcIcon className="w-3 h-3" />
-            The 10% Calculator
+            The 15% Calculator
           </div>
           <h2 className="font-display text-6xl md:text-8xl text-protest-text leading-none mb-4">
             DO THE <span className="text-protest-red">MATH</span>
@@ -113,11 +113,11 @@ export function Calculator() {
                     <motion.div
                       className="h-full rounded-full bg-protest-gold"
                       initial={{ width: 0 }}
-                      animate={{ width: '10%' }}
+                      animate={{ width: '15%' }}
                       transition={{ duration: 1, ease: 'easeOut' }}
                     />
                   </div>
-                  <span className="font-display text-protest-gold text-lg">10%</span>
+                  <span className="font-display text-protest-gold text-lg">15%</span>
                 </div>
                 <p className="font-mono text-xs text-protest-muted italic leading-relaxed">
                   "For a product that cracked by itself — quite generous, no?"
@@ -138,11 +138,11 @@ export function Calculator() {
                     <motion.div
                       className="h-full rounded-full bg-protest-red"
                       initial={{ width: 0 }}
-                      animate={{ width: '90%' }}
+                      animate={{ width: '85%' }}
                       transition={{ duration: 1, ease: 'easeOut', delay: 0.1 }}
                     />
                   </div>
-                  <span className="font-display text-protest-red text-lg">90%</span>
+                  <span className="font-display text-protest-red text-lg">85%</span>
                 </div>
                 <p className="font-mono text-xs text-protest-muted italic leading-relaxed">
                   "For a defect that wasn't your fault. Perfectly reasonable."
@@ -153,13 +153,13 @@ export function Calculator() {
                 <div>
                   <p className="font-sans text-protest-text text-sm font-semibold mb-1">
                     For a <span className="text-protest-red">known manufacturing defect</span>, Soundcore's solution asks you to fund{' '}
-                    <span className="text-protest-red font-bold">90%</span> of the replacement.
+                    <span className="text-protest-red font-bold">85%</span> of the replacement.
                   </p>
                   <p className="font-mono text-protest-muted text-xs italic">Is this a solution — or a sales pitch?</p>
                 </div>
                 <div className="flex items-center gap-1 flex-shrink-0">
-                  <div className="w-2 h-8 rounded bg-protest-gold" title="Soundcore: 10%" />
-                  <div className="w-[18px] h-8 rounded bg-protest-red" title="You: 90%" />
+                  <div className="w-[3px] h-8 rounded bg-protest-gold" title="Soundcore: 15%" />
+                  <div className="w-[17px] h-8 rounded bg-protest-red" title="You: 85%" />
                 </div>
               </div>
             </motion.div>
@@ -191,7 +191,7 @@ export function Calculator() {
                       exit={{ opacity: 0, scale: 0.8 }}
                       className="absolute left-1/2 -translate-x-1/2 top-0 w-max max-w-[90vw] bg-protest-bg-el border border-protest-border px-4 py-3 rounded-2xl font-mono text-xs sm:text-sm text-protest-text shadow-2xl z-10 text-center"
                     >
-                      "We appreciate your loyalty! Now please pay 90% for our mistake." 💀
+                      "We appreciate your loyalty! Now please pay 85% for our mistake." 💀
                     </motion.div>
                   )}
                 </AnimatePresence>
