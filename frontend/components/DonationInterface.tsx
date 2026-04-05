@@ -184,34 +184,41 @@ export function DonationInterface() {
 
       const orderId  = data.order_id!
       const cashfree = await load({ mode: 'production' })
-      const result   = await cashfree.checkout({
+
+      // Ignore client-side result — UPI/Net Banking return { redirect: true }
+      // before the payment is actually completed. Server is the source of truth.
+      await cashfree.checkout({
         paymentSessionId: data.payment_session_id,
         redirectTarget:   '_modal',
       })
 
       setLoading(false)
+      setVerifying(true)
 
-      if (result?.error) {
-        setError('Payment incomplete or verification failed. No funds were deducted.')
-        return
+      // Wait 2s for Cashfree to process the payment on their end
+      await new Promise(r => setTimeout(r, 2000))
+
+      // Retry up to 3 times with 2s gap (handles slow UPI processing)
+      let verifyData: { success?: boolean; error?: string } = {}
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        const verifyRes = await fetch(`${API_URL}/api/verify-payment`, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ order_id: orderId, name, email, amount: finalAmount, note: note.trim() || null }),
+        })
+        verifyData = await verifyRes.json() as { success?: boolean; error?: string }
+        if (verifyData.success) break
+        if (attempt < 3) await new Promise(r => setTimeout(r, 2000))
       }
 
-      setVerifying(true)
-      const verifyRes = await fetch(`${API_URL}/api/verify-payment`, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ order_id: orderId, name, email, amount: finalAmount, note: note.trim() || null }),
-      })
-      const verifyData = await verifyRes.json() as { success?: boolean; error?: string }
-
-      if (!verifyRes.ok || !verifyData.success) {
+      if (!verifyData.success) {
         setError(verifyData.error || 'Payment incomplete or verification failed. No funds were deducted.')
         return
       }
 
       setSuccessData({ name: name.trim(), email: email.trim(), amount: finalAmount })
       setShowSuccess(true)
-      fetchSupporters() // refresh live feed immediately
+      fetchSupporters()
     } catch {
       setError('Network error. Please try again.')
     } finally {

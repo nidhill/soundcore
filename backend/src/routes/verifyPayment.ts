@@ -209,15 +209,20 @@ router.post('/', async (req, res) => {
       { upsert: true },
     )
 
-    /* ── 3. Send receipt email via Resend ───────────────────────────────── */
+    /* ── 3. Send receipt email via Resend (non-fatal) ───────────────────── */
     if (verifiedEmail && process.env.RESEND_API_KEY) {
-      const resend = new Resend(process.env.RESEND_API_KEY)
-      await resend.emails.send({
-        from:    'Q30 Protest <noreply@soundcore.social>',
-        to:      verifiedEmail,
-        subject: 'Payment Received: Thank you for funding Justice! ⚡',
-        html:    buildReceiptHtml(verifiedName, verifiedAmount, order_id),
-      })
+      try {
+        const resend = new Resend(process.env.RESEND_API_KEY)
+        await resend.emails.send({
+          from:    'Q30 Protest <noreply@soundcore.social>',
+          to:      verifiedEmail,
+          subject: 'Payment Received: Thank you for funding Justice! ⚡',
+          html:    buildReceiptHtml(verifiedName, verifiedAmount, order_id),
+        })
+      } catch (emailErr) {
+        // Email failure is non-fatal — log but don't block the success response
+        console.error('[verify-payment] Email send failed:', emailErr)
+      }
     }
 
     res.json({ success: true })
