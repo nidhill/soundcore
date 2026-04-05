@@ -11,7 +11,7 @@ function CrackedQ30() {
       {/* Real product photo */}
       <img
         src="/q30.png"
-        alt="Soundcore Life Q30 — cracked headband"
+        alt="Soundcore by Anker Life Q30 cracked headband defect"
         className="w-full h-full object-contain drop-shadow-2xl"
         style={{ filter: 'drop-shadow(0 0 32px rgba(255,31,31,0.25))' }}
       />

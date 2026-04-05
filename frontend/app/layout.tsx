@@ -27,19 +27,28 @@ const spaceMono = Space_Mono({
    Twitter / X card preview uses the same image.
 ───────────────────────────────────────────────────────────────────────── */
 const SITE_URL    = 'https://www.soundcore.social'
-const OG_IMAGE_URL = `${SITE_URL}/og-image.png`
+const OG_IMAGE_URL = `${SITE_URL}/og-image.jpg`
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'The 15% Masterpiece | A Soundcore Protest',
+  title: 'Soundcore by Anker Life Q30 Review | The Headband Crack Issue',
   description:
-    'When customer service fails, developers build. See how a global brand rewards loyalty with a 15% discount on a defective design.',
+    'Thinking of buying the Soundcore by Anker Life Q30? Read this first. A detailed look at the known headband structural defect and Anker customer support.',
+  keywords: [
+    'Soundcore by Anker Life Q30',
+    'Life Q30 headband crack',
+    'Soundcore warranty',
+    'Anker support review',
+  ],
+  alternates: {
+    canonical: SITE_URL,
+  },
 
   /* ── OpenGraph ────────────────────────────────────────────────────────── */
   openGraph: {
-    title: 'The 15% Masterpiece | A Soundcore Protest',
+    title: 'The Truth About Soundcore by Anker Life Q30',
     description:
-      'When customer service fails, developers build. See how a global brand rewards loyalty with a 15% discount on a defective design.',
+      'Thinking of buying the Soundcore by Anker Life Q30? Read this first. A detailed look at the known headband structural defect and Anker customer support.',
     url: SITE_URL,
     siteName: 'soundcore.social',
     type: 'website',
@@ -48,7 +57,7 @@ export const metadata: Metadata = {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: 'The 15% Masterpiece — A Soundcore Protest Site',
+        alt: 'Soundcore by Anker Life Q30 cracked headband defect',
       },
     ],
   },
@@ -56,9 +65,9 @@ export const metadata: Metadata = {
   /* ── Twitter / X ──────────────────────────────────────────────────────── */
   twitter: {
     card: 'summary_large_image',
-    title: 'The 15% Masterpiece | A Soundcore Protest',
+    title: 'The Truth About Soundcore by Anker Life Q30',
     description:
-      'When customer service fails, developers build. See how a global brand rewards loyalty with a 15% discount on a defective design.',
+      'Thinking of buying the Soundcore by Anker Life Q30? Read this first. A detailed look at the known headband structural defect and Anker customer support.',
     images: [OG_IMAGE_URL],
   },
 }
