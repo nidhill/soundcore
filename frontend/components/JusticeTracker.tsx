@@ -245,10 +245,6 @@ export function JusticeTracker({ onGoalReached }: Props) {
           ))}
         </div>
 
-        {/* Polling note */}
-        <p className="font-mono text-[10px] text-protest-muted/40 text-center mt-6">
-          // Progress refreshes every {POLL_MS / 1000}s · powered by MongoDB Atlas
-        </p>
       </div>
     </section>
   )
