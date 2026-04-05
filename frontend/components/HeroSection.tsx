@@ -160,7 +160,7 @@ export function HeroSection() {
           <div className="inline-flex items-center gap-2 bg-protest-red-dark border border-protest-red/40 px-5 py-2 rounded-full">
             <AlertTriangle className="w-3.5 h-3.5 text-protest-red" />
             <span className="font-mono text-xs text-protest-red uppercase tracking-[0.18em]">
-              ERROR: Q30_HEADBAND_CRACKED &nbsp;//&nbsp; OFFER_UPGRADED_FROM_10%_TO_15%
+              PRODUCT: SOUNDCORE BY ANKER LIFE Q30 &nbsp;//&nbsp; ERROR: STRUCTURAL_DEFECT
             </span>
           </div>
         </motion.div>
@@ -191,6 +191,9 @@ export function HeroSection() {
             transition={{ delay: 0.55 }}
             className="text-center lg:text-left"
           >
+            <p className="font-mono text-protest-gold/70 text-xs sm:text-sm uppercase tracking-[0.22em] mb-4 border-b border-protest-gold/20 pb-3">
+              A Developer's Review of the Soundcore by Anker Life Q30
+            </p>
             <h1 className="font-display leading-none select-none">
               <div className="text-[4.5rem] sm:text-[6rem] lg:text-[8rem] xl:text-[9.5rem] text-protest-text">
                 {line1.split('').map((c, i) => (
@@ -214,12 +217,11 @@ export function HeroSection() {
           className="text-center mb-12"
         >
           <p className="font-mono text-protest-muted text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-            Where brand loyalty meets a{' '}
-            <span className="text-protest-muted line-through text-sm mr-1">10%</span>
+            Where brand loyalty to Anker meets a{' '}
             <span className="text-protest-gold font-bold border-b border-protest-gold/30">
               15% discount
             </span>{' '}
-            on a broken design.
+            on a broken <span className="text-protest-text">Soundcore Life Q30</span> design.
           </p>
           <p className="font-mono text-protest-muted/50 text-xs mt-2">
             — Presented by Muhammad Nidhil, Junior Software Developer &amp; Loyal Soundcore Customer
