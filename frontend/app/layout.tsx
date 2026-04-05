@@ -26,27 +26,29 @@ const spaceMono = Space_Mono({
    OG image: drop a 1200×630 image at /public/og-image.png before deploying.
    Twitter / X card preview uses the same image.
 ───────────────────────────────────────────────────────────────────────── */
-const SITE_URL    = 'https://soundcore-self.vercel.app'
+const SITE_URL    = 'https://www.soundcore.social'
 const OG_IMAGE_URL = `${SITE_URL}/og-image.png`
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'The 10% Masterpiece | A Soundcore Protest',
+  title: 'The 15% Masterpiece | A Soundcore Protest',
   description:
-    'When customer service fails, developers build. See how a global brand rewards loyalty with a 10% discount on a defective design.',
+    'When customer service fails, developers build. See how a global brand rewards loyalty with a 15% discount on a defective design.',
 
   /* ── OpenGraph ────────────────────────────────────────────────────────── */
   openGraph: {
-    title: 'The 10% Masterpiece | A Soundcore Protest',
+    title: 'The 15% Masterpiece | A Soundcore Protest',
     description:
-      'When customer service fails, developers build. See how a global brand rewards loyalty with a 10% discount on a defective design.',
+      'When customer service fails, developers build. See how a global brand rewards loyalty with a 15% discount on a defective design.',
+    url: SITE_URL,
+    siteName: 'soundcore.social',
     type: 'website',
     images: [
       {
         url: OG_IMAGE_URL,
         width: 1200,
         height: 630,
-        alt: 'The 10% Masterpiece — A Soundcore Protest Site',
+        alt: 'The 15% Masterpiece — A Soundcore Protest Site',
       },
     ],
   },
@@ -54,9 +56,9 @@ export const metadata: Metadata = {
   /* ── Twitter / X ──────────────────────────────────────────────────────── */
   twitter: {
     card: 'summary_large_image',
-    title: 'The 10% Masterpiece | A Soundcore Protest',
+    title: 'The 15% Masterpiece | A Soundcore Protest',
     description:
-      'When customer service fails, developers build. See how a global brand rewards loyalty with a 10% discount on a defective design.',
+      'When customer service fails, developers build. See how a global brand rewards loyalty with a 15% discount on a defective design.',
     images: [OG_IMAGE_URL],
   },
 }

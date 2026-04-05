@@ -15,6 +15,8 @@ function isAllowedOrigin(origin: string | undefined): boolean {
   if (!origin) return true                          // non-browser / server calls
   if (!FRONTEND && process.env.NODE_ENV !== 'production') return true // dev fallback
   if (origin === FRONTEND) return true              // exact production match
+  if (origin === 'https://www.soundcore.social') return true
+  if (origin === 'https://soundcore.social') return true
   if (/^https:\/\/[a-z0-9-]+-nidhills-projects\.vercel\.app$/.test(origin)) return true // Vercel previews
   if (origin === 'http://localhost:3000') return true
   return false
