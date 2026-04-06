@@ -23,6 +23,8 @@ function timeAgo(dateStr: string) {
 
 function ReviewCard({ review, index }: { review: Review; index: number }) {
   const [imgError, setImgError] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+  const isLong = review.description.length > 220
 
   return (
     <motion.div
@@ -62,9 +64,17 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
           </div>
           <AlertTriangle className="w-4 h-4 text-protest-red flex-shrink-0 mt-0.5" />
         </div>
-        <p className="font-sans text-protest-dim text-sm leading-relaxed line-clamp-4">
+        <p className={`font-sans text-protest-dim text-sm leading-relaxed ${isLong && !expanded ? 'line-clamp-4' : ''}`}>
           {review.description}
         </p>
+        {isLong && (
+          <button
+            onClick={() => setExpanded(e => !e)}
+            className="mt-2 font-mono text-xs text-protest-red hover:text-protest-text transition-colors"
+          >
+            {expanded ? '↑ show less' : '↓ read more'}
+          </button>
+        )}
       </div>
     </motion.div>
   )
